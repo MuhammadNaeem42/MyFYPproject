@@ -1,0 +1,162 @@
+version: '3'
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db-container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+        - ./mysql-db/user.sql:/docker-entrypoint-initdb.d/user.sql
+    ports:
+      - 3306:3306
+    networks:
+      - spring-cloud-microservices
+
+  redis-cache:
+    image: redis:alpine
+    container_name: redis-cache-container
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - 6379:6379
+    networks:
+      - spring-cloud-microservices
+
+  authentication-service:
+    build:
+      context: .
+      dockerfile: ./server/authentication-service/Dockerfile-dev
+    container_name: authentication-service-container
+    restart: always
+    depends_on:
+      - mysql-db
+      - redis-cache
+      - react-ui
+    environment:
+      - DB_HOST=mysql-db
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_SCHEMA=${DB_SCHEMA}
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - PORT=${AUTHENTICATION_SERVICE_PORT}
+    links:
+      - mysql-db:mysql
+    expose:
+      - ${AUTHENTICATION_SERVICE_PORT}
+    ports:
+      - ${AUTHENTICATION_SERVICE_PORT}:${AUTHENTICATION_SERVICE_PORT}
+    networks:
+      - spring-cloud-microservices
+
+  common-data-service:
+    build:
+      context: .
+      dockerfile: ./server/common-data-service/Dockerfile-dev
+    container_name: common-data-service-container
+    restart: always
+    depends_on:
+      - mysql-db
+      - redis-cache
+      - react-ui
+    environment:
+      - DB_HOST=mysql-db
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_SCHEMA=${DB_SCHEMA}
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - PORT=${COMMON_DATA_SERVICE_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis-cache
+      - REDIS_PORT=${REDIS_PORT}
+      - REACT_CLIENT_URL=${REACT_CLIENT_URL}
+    links:
+      - mysql-db:mysql
+    expose:
+      - ${COMMON_DATA_SERVICE_PORT}
+    ports:
+      - ${COMMON_DATA_SERVICE_PORT}:${COMMON_DATA_SERVICE_PORT}
+    networks:
+      - spring-cloud-microservices
+
+  search-suggestion-service:
+    build:
+      context: .
+      dockerfile: ./server/search-suggestion-service/Dockerfile-dev
+    container_name: search-suggestion-service-container
+    restart: always
+    depends_on:
+      - mysql-db
+      - redis-cache
+      - react-ui
+      - common-data-service
+      - authentication-service
+      - payment-service
+    environment:
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - PORT=${SEARCH_SUGGESTION_SERVICE_PORT}
+      - COMMON_DATA_SERVICE_URL=http://common-data-service:${COMMON_DATA_SERVICE_PORT}
+    expose:
+      - ${SEARCH_SUGGESTION_SERVICE_PORT}
+    ports:
+      - ${SEARCH_SUGGESTION_SERVICE_PORT}:${SEARCH_SUGGESTION_SERVICE_PORT}
+    networks:
+      - spring-cloud-microservices
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: ./server/payment-service/Dockerfile-dev
+    container_name: payment-service-container
+    restart: always
+    depends_on:
+      - mysql-db
+      - redis-cache
+      - react-ui
+    environment:
+      - DB_HOST=mysql-db
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_SCHEMA=${DB_SCHEMA}
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
+      - PORT=${PAYMENT_SERVICE_PORT}
+    links:
+      - mysql-db:mysql
+    expose:
+      - ${PAYMENT_SERVICE_PORT}
+    ports:
+      - ${PAYMENT_SERVICE_PORT}:${PAYMENT_SERVICE_PORT}
+    networks:
+      - spring-cloud-microservices
+
+  react-ui:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    container_name: react-service-container
+    stdin_open: true
+    restart: always
+    expose:
+      - ${REACT_APP_PORT}
+    ports:
+      - ${REACT_APP_PORT}:${REACT_APP_PORT}
+    environment:
+      - REACT_APP_STRIPE_PUBLISH_KEY=${REACT_APP_STRIPE_PUBLISH_KEY}
+      - REACT_APP_COMMON_DATA_SERVICE_PORT=${COMMON_DATA_SERVICE_PORT}
+      - REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mysql-db
+      - redis-cache
+    networks:
+      - spring-cloud-microservices
+networks:
+  spring-cloud-microservices:
+    external: true

@@ -1,0 +1,49 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch AuthenticationServiceApplication",
+            "request": "launch",
+            "mainClass": "com.ujjaval.ecommerce.authenticationservice.AuthenticationServiceApplication",
+            "projectName": "authentication-service"
+        },
+        {
+            "type": "java",
+            "name": "Launch CommonDataServiceApplication",
+            "request": "launch",
+            "mainClass": "com.ujjaval.ecommerce.commondataservice.CommonDataServiceApplication",
+            "projectName": "common-data-service"
+        },
+        {
+            "type": "java",
+            "name": "Launch PaymentServiceApplication",
+            "request": "launch",
+            "mainClass": "com.ujjaval.ecommerce.paymentservice.PaymentServiceApplication",
+            "projectName": "payment-service"
+        },
+        {
+            "type": "java",
+            "name": "Launch SearchSuggestionServiceApplication",
+            "request": "launch",
+            "mainClass": "com.ujjaval.ecommerce.searchsuggestionservice.SearchSuggestionServiceApplication",
+            "projectName": "search-suggestion-service"
+        },
+        {
+            "type": "java",
+            "name": "Launch SellerAccountServiceApplication",
+            "request": "launch",
+            "mainClass": "com.ujjaval.ecommerce.selleraccountservice.SellerAccountServiceApplication",
+            "projectName": "seller-account-service"
+        }
+    ]
+}
