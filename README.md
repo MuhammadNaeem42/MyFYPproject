@@ -1,14 +1,6 @@
 # spring-boot-react-ecommerce-app
 eCommerce application based on the microservices architecture built using Spring Boot and ReactJS.
 
-**DEMO**
-- Deployed to Heroku Cloud:
-
-  https://shoppers-ecom-app.herokuapp.com
-
-  **Note:** It is running on a free dyno, so the services go to sleep if not in use.
-       For the first time, it may take some time to respond.
- 
 **FEATURES**
 
 - Google OAuth 2.0 support for quick login.
@@ -48,9 +40,7 @@ eCommerce application based on the microservices architecture built using Spring
  for money deduction. 
 - **Search Suggestion Service:** Provide default search suggestions and provides suggestions based on a prefix using Hashmap. The service creates the Hashmap based on available data from the database with various combinations and populates the map.
 
-**Steps for executing the application using docker-compose:**
 
-Installation Video: https://youtu.be/nPKYbdKPd0E
 
 1. Clone/Download the repository.
 
@@ -106,25 +96,3 @@ Installation Video: https://youtu.be/nPKYbdKPd0E
  
 5. Deploy individual service on Heroku.
 
-
-**References**  
-1. https://spring.io/blog/2015/06/08/cors-support-in-spring-framework
-2. https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
-3. https://material-ui.com/
-4. https://react.semantic-ui.com/
-5. https://swiperjs.com/demos/
-6. https://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
-7. https://redis.io/commands
-8. https://docs.spring.io/spring-data/data-redis/docs/current/reference/html/#reference
-9. https://github.com/google/gson
-10. http://modelmapper.org/user-manual/spring-integration/
-11. https://www.baeldung.com/spring-data-redis-tutorial
-12. https://github.com/js-cookie/js-cookie
-13. https://reactjs.org/docs/hooks-reference.html
-14. https://redux-form.com/8.3.0/docs/gettingstarted.md/
-15. https://react-redux.js.org/api/connect
-16. https://github.com/reduxjs/redux-thunk
-17. https://attacomsian.com/blog/spring-data-jpa-one-to-many-mapping
-18. https://stripe.com/docs
-19. https://developers.google.com/identity/protocols/oauth2
-20. https://devcenter.heroku.com/articles/heroku-redis
