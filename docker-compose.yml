@@ -14,7 +14,7 @@ services:
     ports:
       - 3306:3306
     networks:
-      - spring-cloud-microservices
+      - microservice
 
   redis-cache:
     image: redis:alpine
@@ -23,7 +23,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      - spring-cloud-microservices
+      - microservice
 
   authentication-service:
     build:
@@ -50,7 +50,7 @@ services:
     ports:
       - ${AUTHENTICATION_SERVICE_PORT}:${AUTHENTICATION_SERVICE_PORT}
     networks:
-      - spring-cloud-microservices
+      - microservice
 
   common-data-service:
     build:
@@ -81,7 +81,7 @@ services:
     ports:
       - ${COMMON_DATA_SERVICE_PORT}:${COMMON_DATA_SERVICE_PORT}
     networks:
-      - spring-cloud-microservices
+      - microservice
 
   search-suggestion-service:
     build:
@@ -105,7 +105,7 @@ services:
     ports:
       - ${SEARCH_SUGGESTION_SERVICE_PORT}:${SEARCH_SUGGESTION_SERVICE_PORT}
     networks:
-      - spring-cloud-microservices
+      - microservice
 
   payment-service:
     build:
@@ -132,7 +132,7 @@ services:
     ports:
       - ${PAYMENT_SERVICE_PORT}:${PAYMENT_SERVICE_PORT}
     networks:
-      - spring-cloud-microservices
+      - microservice
 
   react-ui:
     build:
@@ -156,7 +156,7 @@ services:
       - mysql-db
       - redis-cache
     networks:
-      - spring-cloud-microservices
+      - microservice
 networks:
-  spring-cloud-microservices:
+  microservice:
     external: true
