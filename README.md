@@ -46,7 +46,7 @@ eCommerce application based on the microservices architecture built using Spring
 
 2. Set the environmental variables which will be impacted on docker-compose.yml.
    
-    1. Rename the file ".env-sample" to ".env".     
+    1. Rename the file ".env.sample" to ".env".     
     2. (Optional Step) You need to create a Stripe account and Google OAuth credentials.
        The application works even if you don't create this account, only the payment and OAuth functionality will not work.
        These accounts doesn't charge you anything and are absolutely free.<br/><br/>
