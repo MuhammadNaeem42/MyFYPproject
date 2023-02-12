@@ -1,0 +1,31 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker --version
+
+script:
+  - export MYSQL_ROOT_PASSWORD=password
+  - export MYSQL_DATABASE=test_db
+  - export MYSQL_USER=test_user
+  - export MYSQL_PASSWORD=test_password
+  - export REDIS_PASSWORD=redis_password
+  - export DB_PORT=3306
+  - export DB_USER=root
+  - export DB_PASS=password
+  - export DB_SCHEMA=test_db
+  - export ACTIVE_PROFILE=dev
+  - export AUTHENTICATION_SERVICE_PORT=8081
+  - export COMMON_DATA_SERVICE_PORT=8082
+  - export SEARCH_SUGGESTION_SERVICE_PORT=8083
+  - export PAYMENT_SERVICE_PORT=8084
+  - export REDIS_PORT=6379
+  - export REACT_CLIENT_URL=http://localhost:3000
+  - docker-compose -f docker-compose.yml up --build
+
+after_script:
+  - docker-compose down
