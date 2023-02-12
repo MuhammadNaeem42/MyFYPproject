@@ -8,7 +8,7 @@ import com.ujjaval.ecommerce.commondataservice.model.MainScreenResponse;
 import com.ujjaval.ecommerce.commondataservice.model.SearchSuggestionResponse;
 
 import java.util.HashMap;
-import java.util.List;
+
 
 public interface CommonDataService {
 

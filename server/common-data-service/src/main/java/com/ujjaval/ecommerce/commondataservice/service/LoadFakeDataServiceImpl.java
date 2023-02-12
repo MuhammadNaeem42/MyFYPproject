@@ -91,8 +91,8 @@ public class LoadFakeDataServiceImpl implements LoadFakeDataService {
     }
 
     private Date generateRandomDate() {
-        long beginTime = Timestamp.valueOf("2019-01-01 00:00:00").getTime();
-        long endTime = Timestamp.valueOf("2020-06-31 00:00:00").getTime();
+        long beginTime = Timestamp.valueOf("2023-01-01 00:00:00").getTime();
+        long endTime = Timestamp.valueOf("2023-06-31 00:00:00").getTime();
         long diff = endTime - beginTime + 1;
         return new Date(beginTime + (long) (Math.random() * diff));
     }

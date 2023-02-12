@@ -12,6 +12,10 @@ import '../src/styles/library/swiper/swiper.css';
 import '../src/styles/library/swiper/swiper.min.css';
 import log from 'loglevel';
 import ErrorBoundary from "./ErrorBoundary";
+import ReactGA from "react-ga4";
+
+ReactGA.initialize("G-K5CM11BX8V");
+ReactGA.send("pageview");
 
 let composeEnhancers
 
